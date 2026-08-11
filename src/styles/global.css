@@ -1,0 +1,20 @@
+@import "tailwindcss";
+/* Full-viewport hero artwork, exactly as the original serves it (AVIF with
+   WebP fallback via image-set). */
+.hero-bg {
+  background-image: -webkit-image-set(
+    url(/bg.avif) 1x type("image/avif"),
+    url(/bg.webp) 1x type("image/webp")
+  );
+  background-image: image-set(
+    "/bg.avif" 1x type("image/avif"),
+    "/bg.webp" 1x type("image/webp")
+  );
+}
+
+/* The clock's blinking colon. */
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

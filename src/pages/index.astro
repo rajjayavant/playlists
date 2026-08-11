@@ -1,0 +1,487 @@
+---
+import "../styles/global.css";
+import tracks from "../tracks.json";
+
+const first = tracks[0];
+---
+
+<html lang="en" class="h-full antialiased">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" as="image" href="/logo.svg" />
+    <link rel="preload" as="image" href={first.cover} />
+    <title>Deluxe Saloon</title>
+    <meta
+      name="description"
+      content="Deluxe Saloon — 90s Bollywood bangers that play at Indian barber shops."
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body class="min-h-full flex flex-col">
+    <main
+      class="relative flex min-h-dvh flex-1 flex-col items-center justify-between overflow-hidden"
+    >
+      <!-- Background artwork + darkening gradient -->
+      <div class="hero-bg fixed inset-0 -z-10 bg-black bg-cover bg-center bg-no-repeat">
+        <div
+          class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40"
+        >
+        </div>
+      </div>
+
+      <!-- IST clock, top left -->
+      <div
+        id="clock"
+        class="fixed left-5 top-5 z-20 text-sm font-medium tabular-nums text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)]"
+      >
+        &nbsp;
+      </div>
+
+      <!-- Top right: Spotify, YT Music, Fullscreen -->
+      <div class="fixed right-5 top-5 z-20 flex items-center gap-2">
+        <a
+          href="https://open.spotify.com/playlist/2AVjI8Z57bqMJVtU3V9X1Q"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group/pill flex items-center gap-2 rounded-full text-sm font-medium text-white p-2.5 sm:py-2 sm:pl-3 sm:pr-3.5 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition hover:opacity-80 active:scale-95"
+          aria-label="Open on Spotify"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true"
+            ><path
+              d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"
+            ></path></svg
+          >
+          <span class="hidden sm:inline">Spotify</span>
+          <span class="hidden sm:inline-flex">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="-rotate-45 opacity-50 transition group-hover/pill:opacity-90"
+              ><path d="M5 12h14M13 6l6 6-6 6"></path></svg
+            >
+          </span>
+        </a>
+        <a
+          href="https://music.youtube.com/playlist?list=PLTJ1PnzCWyFw"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group/pill flex items-center gap-2 rounded-full text-sm font-medium text-white p-2.5 sm:py-2 sm:pl-3 sm:pr-3.5 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition hover:opacity-80 active:scale-95"
+          aria-label="Open on YouTube Music"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true"
+            ><path
+              d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.684 15.54V8.46L15.816 12l-6.132 3.54z"
+            ></path></svg
+          >
+          <span class="hidden sm:inline">YT Music</span>
+          <span class="hidden sm:inline-flex">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="-rotate-45 opacity-50 transition group-hover/pill:opacity-90"
+              ><path d="M5 12h14M13 6l6 6-6 6"></path></svg
+            >
+          </span>
+        </a>
+        <button
+          id="fullscreen-btn"
+          type="button"
+          class="group/pill flex items-center gap-2 rounded-full text-sm font-medium text-white p-2.5 sm:py-2 sm:pl-3 sm:pr-3.5 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition hover:opacity-80 active:scale-95"
+          aria-label="Toggle fullscreen"
+        >
+          <svg
+            id="fs-enter-icon"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            ><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
+            ></path></svg
+          >
+          <svg
+            id="fs-exit-icon"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            class="hidden"
+            ><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"
+            ></path></svg
+          >
+          <span id="fs-label" class="hidden sm:inline">Fullscreen</span>
+        </button>
+      </div>
+
+      <!-- Logo -->
+      <div class="mt-[14vh] flex flex-col items-center px-6">
+        <h1>
+          <img
+            alt="Deluxe Saloon"
+            width="930"
+            height="627"
+            class="h-auto w-[60vw] max-w-md drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
+            src="/logo.svg"
+          />
+        </h1>
+      </div>
+
+      <!-- Player -->
+      <div class="mb-[8vh] flex w-full justify-center px-6">
+        <div class="w-full max-w-xl">
+          <!-- Hidden YouTube player mount -->
+          <div class="pointer-events-none absolute h-px w-px overflow-hidden opacity-0">
+            <div id="yt-mount"></div>
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 rounded-full p-3 pr-5 bg-white/10 backdrop-blur-2xl backdrop-saturate-150 border border-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.25)]"
+          >
+            <!-- Spinning record -->
+            <div class="relative h-20 w-20 shrink-0">
+              <div
+                id="disc"
+                class="h-full w-full animate-[spin_8s_linear_infinite] overflow-hidden rounded-full shadow-lg ring-1 ring-white/20"
+                style="animation-play-state: paused"
+              >
+                <img
+                  id="cover"
+                  src={first.cover}
+                  alt={`${first.album} artwork`}
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <div
+                class="pointer-events-none absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/70 ring-2 ring-white/40"
+              >
+              </div>
+            </div>
+
+            <!-- Track info + seek -->
+            <div class="min-w-0 flex-1">
+              <p id="track-title" class="truncate text-[15px] font-semibold text-white drop-shadow-sm">
+                {first.title}
+              </p>
+              <p id="track-artist" class="truncate text-[13px] text-white/70">{first.artist}</p>
+              <div class="mt-2">
+                <div
+                  id="seek-bar"
+                  class="group/bar relative h-2 w-full cursor-pointer"
+                  role="slider"
+                  aria-label="Seek"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="0"
+                >
+                  <div
+                    class="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 overflow-hidden rounded-full bg-white/20"
+                  >
+                    <div id="seek-fill" class="h-full rounded-full bg-white/90" style="width:0%"></div>
+                  </div>
+                  <div
+                    id="seek-knob"
+                    class="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white opacity-0 shadow transition-opacity group-hover/bar:opacity-100"
+                    style="left:0%"
+                  >
+                  </div>
+                </div>
+                <div id="time" class="mt-1.5 text-left text-[11px] tabular-nums text-white/60">
+                  0:00 / 0:00
+                </div>
+              </div>
+            </div>
+
+            <!-- Transport -->
+            <div class="flex items-center gap-1">
+              <button
+                id="shuffle-btn"
+                type="button"
+                aria-label="Toggle shuffle"
+                aria-pressed="false"
+                class="grid h-9 w-9 place-items-center rounded-full text-white/80 transition hover:bg-white/15 hover:text-white active:scale-95"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  ><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"
+                  ></path><path d="m18 2 4 4-4 4"></path><path
+                    d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"></path><path
+                    d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"></path><path d="m18 14 4 4-4 4"
+                  ></path></svg
+                >
+              </button>
+              <button
+                id="prev-btn"
+                type="button"
+                aria-label="Previous track"
+                class="grid h-9 w-9 place-items-center rounded-full text-white/80 transition hover:bg-white/15 hover:text-white active:scale-95"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+                  ><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"></path></svg
+                >
+              </button>
+              <button
+                id="play-btn"
+                type="button"
+                aria-label="Play"
+                aria-pressed="false"
+                disabled
+                class="grid h-11 w-11 place-items-center rounded-full bg-white text-black shadow-lg transition hover:scale-105 active:scale-95 disabled:opacity-50"
+              >
+                <svg
+                  id="play-icon"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg
+                >
+                <svg
+                  id="pause-icon"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  class="hidden"><path d="M7 5h4v14H7zm6 0h4v14h-4z"></path></svg
+                >
+              </button>
+              <button
+                id="next-btn"
+                type="button"
+                aria-label="Next track"
+                class="grid h-9 w-9 place-items-center rounded-full text-white/80 transition hover:bg-white/15 hover:text-white active:scale-95"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+                  ><path d="M16 6h2v12h-2zm-2 6L5.5 6v12z"></path></svg
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      import tracks from "../tracks.json";
+
+      // ---------- IST clock (blinking colon) ----------
+      const clockEl = document.getElementById("clock")!;
+      const fmt = new Intl.DateTimeFormat("en-IN", {
+        timeZone: "Asia/Kolkata",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+      function renderClock() {
+        const parts = fmt.formatToParts(new Date());
+        const get = (t: string) => parts.find((p) => p.type === t)?.value ?? "";
+        clockEl.innerHTML =
+          `${get("hour")}<span class="animate-[blink_1s_step-end_infinite]">:</span>` +
+          `${get("minute")}<span class="ml-1.5 text-white/70">${get("dayPeriod")}</span>`;
+      }
+      renderClock();
+      setInterval(renderClock, 1000);
+
+      // ---------- Fullscreen toggle ----------
+      const fsBtn = document.getElementById("fullscreen-btn")!;
+      const fsEnter = document.getElementById("fs-enter-icon")!;
+      const fsExit = document.getElementById("fs-exit-icon")!;
+      const fsLabel = document.getElementById("fs-label")!;
+      fsBtn.addEventListener("click", () => {
+        if (document.fullscreenElement) {
+          void document.exitFullscreen();
+        } else {
+          void document.documentElement.requestFullscreen();
+        }
+      });
+      document.addEventListener("fullscreenchange", () => {
+        const active = !!document.fullscreenElement;
+        fsEnter.classList.toggle("hidden", active);
+        fsExit.classList.toggle("hidden", !active);
+        fsLabel.textContent = active ? "Exit" : "Fullscreen";
+      });
+
+      // ---------- YouTube player engine (mirrors the original) ----------
+      const START_AT = 5; // the original skips the first video's first 5 seconds
+      let index = Math.floor(Math.random() * tracks.length);
+      let shuffle = false;
+      let player: YT.Player | null = null;
+      let playing = false;
+
+      const disc = document.getElementById("disc")!;
+      const cover = document.getElementById("cover") as HTMLImageElement;
+      const titleEl = document.getElementById("track-title")!;
+      const artistEl = document.getElementById("track-artist")!;
+      const playBtn = document.getElementById("play-btn") as HTMLButtonElement;
+      const playIcon = document.getElementById("play-icon")!;
+      const pauseIcon = document.getElementById("pause-icon")!;
+      const seekBar = document.getElementById("seek-bar")!;
+      const seekFill = document.getElementById("seek-fill")!;
+      const seekKnob = document.getElementById("seek-knob")!;
+      const timeEl = document.getElementById("time")!;
+
+      function loadYouTubeApi(): Promise<typeof YT> {
+        if (window.YT?.Player) return Promise.resolve(window.YT);
+        return new Promise((resolve) => {
+          const prev = window.onYouTubeIframeAPIReady;
+          window.onYouTubeIframeAPIReady = () => {
+            prev?.();
+            resolve(window.YT);
+          };
+          const s = document.createElement("script");
+          s.src = "https://www.youtube.com/iframe_api";
+          document.head.appendChild(s);
+        });
+      }
+
+      function setPlaying(next: boolean) {
+        playing = next;
+        disc.style.animationPlayState = next ? "running" : "paused";
+        playIcon.classList.toggle("hidden", next);
+        pauseIcon.classList.toggle("hidden", !next);
+        playBtn.setAttribute("aria-label", next ? "Pause" : "Play");
+        playBtn.setAttribute("aria-pressed", String(next));
+      }
+
+      function showTrack(i: number) {
+        const t = tracks[i];
+        titleEl.textContent = t.title;
+        artistEl.textContent = t.artist;
+        if (t.cover) {
+          cover.src = t.cover;
+          cover.alt = `${t.album} artwork`;
+        } else {
+          cover.removeAttribute("src");
+          cover.alt = "";
+        }
+      }
+
+      function goTo(i: number) {
+        index = (i + tracks.length) % tracks.length;
+        showTrack(index);
+        player?.loadVideoById(tracks[index].youtubeId);
+      }
+
+      /**
+       * The step target: sequential neighbor normally, a random other track
+       * when shuffle is on. Auto-advance at the end of a video uses the same
+       * rule, so shuffle governs the whole listening order.
+       */
+      function stepIndex(delta: number): number {
+        if (shuffle && tracks.length > 1) {
+          let r = index;
+          while (r === index) r = Math.floor(Math.random() * tracks.length);
+          return r;
+        }
+        return (index + delta + tracks.length) % tracks.length;
+      }
+
+      // The server renders track 0; reflect the randomized pick immediately.
+      showTrack(index);
+
+      const shuffleBtn = document.getElementById("shuffle-btn")!;
+      shuffleBtn.addEventListener("click", () => {
+        shuffle = !shuffle;
+        shuffleBtn.setAttribute("aria-pressed", String(shuffle));
+        shuffleBtn.classList.toggle("bg-white/15", shuffle);
+        shuffleBtn.classList.toggle("text-white", shuffle);
+        shuffleBtn.classList.toggle("text-white/80", !shuffle);
+      });
+
+      loadYouTubeApi().then((api) => {
+        player = new api.Player("yt-mount", {
+          videoId: tracks[index].youtubeId,
+          playerVars: {
+            controls: 0,
+            disablekb: 1,
+            playsinline: 1,
+            rel: 0,
+            modestbranding: 1,
+            start: START_AT,
+          },
+          events: {
+            onReady: () => {
+              playBtn.disabled = false;
+            },
+            onStateChange: (e) => {
+              const S = window.YT.PlayerState;
+              if (e.data === S.PLAYING) setPlaying(true);
+              else if (e.data === S.PAUSED) setPlaying(false);
+              else if (e.data === S.ENDED) goTo(stepIndex(1));
+            },
+          },
+        });
+      });
+
+      playBtn.addEventListener("click", () => {
+        if (playing) player?.pauseVideo();
+        else player?.playVideo();
+      });
+      document.getElementById("prev-btn")!.addEventListener("click", () => goTo(stepIndex(-1)));
+      document.getElementById("next-btn")!.addEventListener("click", () => goTo(stepIndex(1)));
+
+      // Seek: click position → fraction of duration
+      seekBar.addEventListener("click", (e) => {
+        if (!player) return;
+        const rect = seekBar.getBoundingClientRect();
+        const fraction = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+        const duration = player.getDuration();
+        if (duration) player.seekTo(duration * fraction, true);
+      });
+
+      // Progress poll, 400 ms like the original
+      function fmtTime(s: number) {
+        if (!Number.isFinite(s) || s < 0) s = 0;
+        return `${Math.floor(s / 60)}:${Math.floor(s % 60)
+          .toString()
+          .padStart(2, "0")}`;
+      }
+      setInterval(() => {
+        if (!player || typeof player.getCurrentTime !== "function") return;
+        const current = player.getCurrentTime() || 0;
+        const duration = player.getDuration() || 0;
+        const pct = duration > 0 ? (current / duration) * 100 : 0;
+        seekFill.style.width = `${pct}%`;
+        seekKnob.style.left = `${pct}%`;
+        seekBar.setAttribute("aria-valuenow", String(Math.round(pct)));
+        timeEl.textContent = `${fmtTime(current)} / ${fmtTime(duration)}`;
+      }, 400);
+    </script>
+  </body>
+</html>
