@@ -20,7 +20,10 @@ const assets = tenantAssets(tenant.key);
 
 // Scrapers need absolute URLs; derive from the host actually being served.
 const origin = `https://${Astro.request.headers.get("host")}`;
-const ogImage = `${origin}${assets}/og.png`;
+// JPEG, kept under ~200 KB: WhatsApp silently drops preview images that are
+// too heavy (the 1.3 MB PNG never showed). The extension change also busts
+// scrapers' cached copies of the old image URL.
+const ogImage = `${origin}${assets}/og.jpg`;
 ---
 
 <html lang="en" class="h-full bg-black antialiased">
