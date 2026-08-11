@@ -183,10 +183,10 @@ const first = tracks[0];
           </div>
 
           <div
-            class="group relative flex items-center gap-4 rounded-full p-3 pr-5 bg-white/10 backdrop-blur-2xl backdrop-saturate-150 border border-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.25)]"
+            class="group relative flex items-center gap-2.5 rounded-full p-2.5 pr-3.5 sm:gap-4 sm:p-3 sm:pr-5 bg-white/10 backdrop-blur-2xl backdrop-saturate-150 border border-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.25)]"
           >
             <!-- Spinning record -->
-            <div class="relative h-20 w-20 shrink-0">
+            <div class="relative h-14 w-14 shrink-0 sm:h-20 sm:w-20">
               <div
                 id="disc"
                 class="h-full w-full animate-[spin_8s_linear_infinite] overflow-hidden rounded-full shadow-lg ring-1 ring-white/20"
@@ -242,20 +242,23 @@ const first = tracks[0];
                   >
                   </div>
                 </div>
-                <div id="time" class="mt-1.5 text-left text-[11px] tabular-nums text-white/60">
+                <div
+                  id="time"
+                  class="mt-1.5 whitespace-nowrap text-left text-[11px] tabular-nums text-white/60"
+                >
                   0:00 / 0:00
                 </div>
               </div>
             </div>
 
             <!-- Transport -->
-            <div class="flex items-center gap-1">
+            <div class="flex items-center gap-0.5 sm:gap-1">
               <button
                 id="shuffle-btn"
                 type="button"
                 aria-label="Toggle shuffle"
                 aria-pressed="false"
-                class="group/tip relative grid h-9 w-9 place-items-center rounded-full text-white/80 transition hover:bg-white/15 hover:text-white active:scale-95"
+                class="group/tip relative grid h-8 w-8 place-items-center sm:h-9 sm:w-9 rounded-full text-white/80 transition hover:bg-white/15 hover:text-white active:scale-95"
               >
                 <span
                   aria-hidden="true"
@@ -283,7 +286,7 @@ const first = tracks[0];
                 id="prev-btn"
                 type="button"
                 aria-label="Previous track"
-                class="group/tip relative grid h-9 w-9 place-items-center rounded-full text-white/80 transition hover:bg-white/15 hover:text-white active:scale-95"
+                class="group/tip relative grid h-8 w-8 place-items-center sm:h-9 sm:w-9 rounded-full text-white/80 transition hover:bg-white/15 hover:text-white active:scale-95"
               >
                 <span
                   aria-hidden="true"
@@ -300,7 +303,7 @@ const first = tracks[0];
                 aria-label="Play"
                 aria-pressed="false"
                 disabled
-                class="group/tip relative grid h-11 w-11 place-items-center rounded-full bg-white text-black shadow-lg transition hover:scale-105 active:scale-95 disabled:opacity-50"
+                class="group/tip relative grid h-10 w-10 place-items-center sm:h-11 sm:w-11 rounded-full bg-white text-black shadow-lg transition hover:scale-105 active:scale-95 disabled:opacity-50"
               >
                 <span
                   aria-hidden="true"
@@ -329,7 +332,7 @@ const first = tracks[0];
                 id="next-btn"
                 type="button"
                 aria-label="Next track"
-                class="group/tip relative grid h-9 w-9 place-items-center rounded-full text-white/80 transition hover:bg-white/15 hover:text-white active:scale-95"
+                class="group/tip relative grid h-8 w-8 place-items-center sm:h-9 sm:w-9 rounded-full text-white/80 transition hover:bg-white/15 hover:text-white active:scale-95"
               >
                 <span
                   aria-hidden="true"
