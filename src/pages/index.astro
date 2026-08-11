@@ -80,7 +80,7 @@ const first = tracks[0];
           </span>
         </a>
         <a
-          href="https://music.youtube.com/playlist?list=PLTJ1PnzCWyFw"
+          href="https://music.youtube.com/playlist?list=PLDqMOi757wQ8"
           target="_blank"
           rel="noopener noreferrer"
           class="group/pill flex items-center gap-2 rounded-full text-sm font-medium text-white p-2.5 sm:py-2 sm:pl-3 sm:pr-3.5 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition hover:opacity-80 active:scale-95"
@@ -181,6 +181,15 @@ const first = tracks[0];
                   alt={`${first.album} artwork`}
                   class="h-full w-full object-cover"
                 />
+                <div
+                  id="cover-fallback"
+                  aria-hidden="true"
+                  class="hidden h-full w-full place-items-center bg-white/10"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="white" class="opacity-90"
+                    ><path d="M12 3v10.55A4 4 0 1014 17V7h4V3z"></path></svg
+                  >
+                </div>
               </div>
               <div
                 class="pointer-events-none absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/70 ring-2 ring-white/40"
@@ -382,6 +391,7 @@ const first = tracks[0];
         playBtn.setAttribute("aria-pressed", String(next));
       }
 
+      const coverFallback = document.getElementById("cover-fallback")!;
       function showTrack(i: number) {
         const t = tracks[i];
         titleEl.textContent = t.title;
@@ -389,9 +399,17 @@ const first = tracks[0];
         if (t.cover) {
           cover.src = t.cover;
           cover.alt = `${t.album} artwork`;
+          cover.classList.remove("hidden");
+          coverFallback.classList.add("hidden");
+          coverFallback.classList.remove("grid");
         } else {
+          // No artwork in the catalog: a quiet music-note tile instead of a
+          // broken image on the record.
           cover.removeAttribute("src");
           cover.alt = "";
+          cover.classList.add("hidden");
+          coverFallback.classList.remove("hidden");
+          coverFallback.classList.add("grid");
         }
       }
 
