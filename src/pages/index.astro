@@ -315,10 +315,11 @@ const first = tracks[0];
     <script>
       import tracks from "../tracks.json";
 
-      // ---------- IST clock (blinking colon) ----------
+      // ---------- Clock (blinking colon), in the visitor's own timezone ----------
       const clockEl = document.getElementById("clock")!;
+      // en-IN locale keeps the lowercase am/pm styling; no timeZone override
+      // means the device's local time is shown.
       const fmt = new Intl.DateTimeFormat("en-IN", {
-        timeZone: "Asia/Kolkata",
         hour: "numeric",
         minute: "2-digit",
         hour12: true,
