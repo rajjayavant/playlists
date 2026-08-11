@@ -1,15 +1,13 @@
 @import "tailwindcss";
-/* Full-viewport hero artwork, exactly as the original serves it (AVIF with
-   WebP fallback via image-set). */
+/* Full-viewport hero artwork: landscape art on wide screens, the portrait
+   variant on phones. */
 .hero-bg {
-  background-image: -webkit-image-set(
-    url(/bg.avif) 1x type("image/avif"),
-    url(/bg.webp) 1x type("image/webp")
-  );
-  background-image: image-set(
-    "/bg.avif" 1x type("image/avif"),
-    "/bg.webp" 1x type("image/webp")
-  );
+  background-image: url(/bg-desktop.png);
+}
+@media (max-width: 640px) {
+  .hero-bg {
+    background-image: url(/bg-mobile.png);
+  }
 }
 
 /* The clock's blinking colon. */
