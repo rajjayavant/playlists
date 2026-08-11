@@ -1,6 +1,6 @@
 {
-  "name": "Deluxe Saloon",
-  "short_name": "Deluxe Saloon",
+  "name": "9XM की सुबह",
+  "short_name": "9XM की सुबह",
   "icons": [
     { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
