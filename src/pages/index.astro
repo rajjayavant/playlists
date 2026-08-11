@@ -68,7 +68,7 @@ const first = tracks[0];
       <!-- Top right: Spotify, YT Music, Fullscreen -->
       <div class="fixed right-5 top-5 z-20 flex items-center gap-2">
         <a
-          href="https://open.spotify.com/playlist/2AVjI8Z57bqMJVtU3V9X1Q"
+          href="https://open.spotify.com/playlist/6ZGYryK4xfQTQIU2CRUEOU"
           target="_blank"
           rel="noopener noreferrer"
           class="group/pill flex items-center gap-2 rounded-full text-sm font-medium text-white p-2.5 sm:py-2 sm:pl-3 sm:pr-3.5 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition hover:opacity-80 active:scale-95"
@@ -125,43 +125,6 @@ const first = tracks[0];
             >
           </span>
         </a>
-        <button
-          id="fullscreen-btn"
-          type="button"
-          class="group/pill flex items-center gap-2 rounded-full text-sm font-medium text-white p-2.5 sm:py-2 sm:pl-3 sm:pr-3.5 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition hover:opacity-80 active:scale-95"
-          aria-label="Toggle fullscreen"
-        >
-          <svg
-            id="fs-enter-icon"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-            ><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
-            ></path></svg
-          >
-          <svg
-            id="fs-exit-icon"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-            class="hidden"
-            ><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"
-            ></path></svg
-          >
-          <span id="fs-label" class="hidden sm:inline">Fullscreen</span>
-        </button>
       </div>
 
       <!-- Title -->
@@ -369,25 +332,6 @@ const first = tracks[0];
       }
       renderClock();
       setInterval(renderClock, 1000);
-
-      // ---------- Fullscreen toggle ----------
-      const fsBtn = document.getElementById("fullscreen-btn")!;
-      const fsEnter = document.getElementById("fs-enter-icon")!;
-      const fsExit = document.getElementById("fs-exit-icon")!;
-      const fsLabel = document.getElementById("fs-label")!;
-      fsBtn.addEventListener("click", () => {
-        if (document.fullscreenElement) {
-          void document.exitFullscreen();
-        } else {
-          void document.documentElement.requestFullscreen();
-        }
-      });
-      document.addEventListener("fullscreenchange", () => {
-        const active = !!document.fullscreenElement;
-        fsEnter.classList.toggle("hidden", active);
-        fsExit.classList.toggle("hidden", !active);
-        fsLabel.textContent = active ? "Exit" : "Fullscreen";
-      });
 
       // ---------- YouTube player engine (mirrors the original) ----------
       const START_AT = 5; // the original skips the first video's first 5 seconds
