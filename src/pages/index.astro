@@ -56,7 +56,10 @@ const ogImage = `${origin}${assets}/og.png`;
     <link rel="apple-touch-icon" href={`${assets}/apple-touch-icon.png`} />
     <link rel="manifest" href="/site.webmanifest" />
   </head>
-  <body class="min-h-full flex flex-col bg-black">
+    <!-- NB: black lives on <html>, NOT on body — an in-flow body background
+         paints on top of negative z-index fixed children, which would cover
+         the hero art entirely. The root background paints behind them. -->
+  <body class="min-h-full flex flex-col">
     <main
       class="relative flex min-h-dvh flex-1 flex-col items-center justify-between overflow-hidden"
     >
