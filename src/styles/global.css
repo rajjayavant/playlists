@@ -1,12 +1,13 @@
 @import "tailwindcss";
 /* Full-viewport hero artwork: landscape art on wide screens, the portrait
-   variant on phones. */
+   variant on phones. The per-tenant image URLs arrive as CSS variables set
+   inline on the element at render time. */
 .hero-bg {
-  background-image: url(/bg-desktop.png);
+  background-image: var(--hero-desktop);
 }
 @media (max-width: 640px) {
   .hero-bg {
-    background-image: url(/bg-mobile.png);
+    background-image: var(--hero-mobile);
   }
 }
 

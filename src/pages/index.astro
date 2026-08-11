@@ -1,63 +1,77 @@
 ---
 import "../styles/global.css";
-import tracks from "../tracks.json";
+import { resolveTenant, tenantAssets } from "../tenant";
+import tracks9xm from "../tracks/9xm.json";
+import tracksParis from "../tracks/paris.json";
 
+const CATALOGS: Record<string, typeof tracks9xm> = {
+  "9xm": tracks9xm,
+  paris: tracksParis,
+};
+
+const tenant = resolveTenant(Astro.request.headers.get("host"));
+if (!tenant) {
+  return new Response("Not found", { status: 404 });
+}
+
+const tracks = CATALOGS[tenant.key] ?? tracks9xm;
 const first = tracks[0];
+const assets = tenantAssets(tenant.key);
+
+// Scrapers need absolute URLs; derive from the host actually being served.
+const origin = `https://${Astro.request.headers.get("host")}`;
+const ogImage = `${origin}${assets}/og.png`;
 ---
 
-<html lang="en" class="h-full antialiased">
+<html lang="en" class="h-full bg-black antialiased">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preload" as="image" href="/bg-desktop.png" media="(min-width: 641px)" />
-    <link rel="preload" as="image" href="/bg-mobile.png" media="(max-width: 640px)" />
+    <meta name="theme-color" content={tenant.tileColor} />
+    <link rel="preload" as="image" href={`${assets}/bg-desktop.png`} media="(min-width: 641px)" />
+    <link rel="preload" as="image" href={`${assets}/bg-mobile.png`} media="(max-width: 640px)" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Rozha+One&display=swap"
       rel="stylesheet"
     />
-    <title>9XM Mornings</title>
-    <meta
-      name="description"
-      content="9XM Mornings — the Bollywood hits that played on TV while you got ready for school."
-    />
-    <meta property="og:title" content="9XM Mornings" />
-    <meta
-      property="og:description"
-      content="The Bollywood hits that played on TV while you got ready for school."
-    />
-    <meta property="og:site_name" content="9XM Mornings" />
+    <title>{tenant.title}</title>
+    <meta name="description" content={tenant.description} />
+    <meta property="og:title" content={tenant.title} />
+    <meta property="og:description" content={tenant.description} />
+    <meta property="og:site_name" content={tenant.title} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/opengraph.png" />
+    <meta property="og:url" content={origin} />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="675" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="9XM Mornings" />
-    <meta
-      name="twitter:description"
-      content="The Bollywood hits that played on TV while you got ready for school."
-    />
-    <meta name="twitter:image" content="/opengraph.png" />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
-    <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="twitter:title" content={tenant.title} />
+    <meta name="twitter:description" content={tenant.description} />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="icon" href={`${assets}/favicon.ico`} sizes="any" />
+    <link rel="icon" href={`${assets}/favicon-32x32.png`} type="image/png" sizes="32x32" />
+    <link rel="icon" href={`${assets}/favicon-16x16.png`} type="image/png" sizes="16x16" />
+    <link rel="apple-touch-icon" href={`${assets}/apple-touch-icon.png`} />
     <link rel="manifest" href="/site.webmanifest" />
   </head>
-  <body class="min-h-full flex flex-col">
+  <body class="min-h-full flex flex-col bg-black">
     <main
       class="relative flex min-h-dvh flex-1 flex-col items-center justify-between overflow-hidden"
     >
       <!-- Background artwork + darkening gradient -->
-      <div class="hero-bg fixed inset-0 -z-10 bg-black bg-cover bg-center bg-no-repeat">
+      <div
+        class="hero-bg fixed inset-0 -z-10 bg-black bg-cover bg-center bg-no-repeat"
+        style={`--hero-desktop: url(${assets}/bg-desktop.png); --hero-mobile: url(${assets}/bg-mobile.png);`}
+      >
         <div
           class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40"
         >
         </div>
       </div>
 
-      <!-- IST clock, top left -->
+      <!-- Clock, top left (visitor's local time) -->
       <div
         id="clock"
         class="fixed left-5 top-5 z-20 text-sm font-medium tabular-nums text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)]"
@@ -65,10 +79,10 @@ const first = tracks[0];
         &nbsp;
       </div>
 
-      <!-- Top right: Spotify, YT Music, Fullscreen -->
+      <!-- Top right: Spotify, YT Music -->
       <div class="fixed right-5 top-5 z-20 flex items-center gap-2">
         <a
-          href="https://open.spotify.com/playlist/6ZGYryK4xfQTQIU2CRUEOU"
+          href={tenant.spotifyLink}
           target="_blank"
           rel="noopener noreferrer"
           class="group/pill flex items-center gap-2 rounded-full text-sm font-medium text-white p-2.5 sm:py-2 sm:pl-3 sm:pr-3.5 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition hover:opacity-80 active:scale-95"
@@ -97,7 +111,7 @@ const first = tracks[0];
           </span>
         </a>
         <a
-          href="https://music.youtube.com/playlist?list=PLDqMOi757wQ8"
+          href={tenant.youtubeLink}
           target="_blank"
           rel="noopener noreferrer"
           class="group/pill flex items-center gap-2 rounded-full text-sm font-medium text-white p-2.5 sm:py-2 sm:pl-3 sm:pr-3.5 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition hover:opacity-80 active:scale-95"
@@ -132,8 +146,8 @@ const first = tracks[0];
         <h1
           class="flex flex-col items-center text-center leading-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)] [font-family:'Rozha_One',serif]"
         >
-          <span class="text-[clamp(3.5rem,13vw,7rem)]">9XM</span>
-          <span class="mt-1 text-[clamp(3.25rem,12.5vw,6.75rem)]">की सुबह</span>
+          <span class="text-[clamp(3.5rem,13vw,7rem)]">{tenant.line1}</span>
+          <span class="mt-1 text-[clamp(3.25rem,12.5vw,6.75rem)]">{tenant.line2}</span>
         </h1>
       </div>
 
@@ -146,10 +160,10 @@ const first = tracks[0];
           </div>
 
           <div
-            class="group relative flex items-center gap-2.5 rounded-full p-2.5 pr-3.5 sm:gap-4 sm:p-3 sm:pr-5 bg-white/10 backdrop-blur-2xl backdrop-saturate-150 border border-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.25)]"
+            class="group relative flex items-center gap-2.5 rounded-full p-2 pr-3 sm:gap-4 sm:p-3 sm:pr-5 bg-white/10 backdrop-blur-2xl backdrop-saturate-150 border border-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.25)]"
           >
             <!-- Spinning record -->
-            <div class="relative h-14 w-14 shrink-0 sm:h-20 sm:w-20">
+            <div class="relative h-12 w-12 shrink-0 sm:h-20 sm:w-20">
               <div
                 id="disc"
                 class="h-full w-full animate-[spin_8s_linear_infinite] overflow-hidden rounded-full shadow-lg ring-1 ring-white/20"
@@ -179,11 +193,11 @@ const first = tracks[0];
 
             <!-- Track info + seek -->
             <div class="min-w-0 flex-1">
-              <p id="track-title" class="truncate text-[15px] font-semibold text-white drop-shadow-sm">
+              <p id="track-title" class="truncate text-[14px] font-semibold text-white drop-shadow-sm sm:text-[15px]">
                 {first.title}
               </p>
-              <p id="track-artist" class="truncate text-[13px] text-white/70">{first.artist}</p>
-              <div class="mt-2">
+              <p id="track-artist" class="truncate text-[12px] text-white/70 sm:text-[13px]">{first.artist}</p>
+              <div class="mt-1 sm:mt-2">
                 <div
                   id="seek-bar"
                   class="group/bar relative h-2 w-full cursor-pointer"
@@ -207,7 +221,7 @@ const first = tracks[0];
                 </div>
                 <div
                   id="time"
-                  class="mt-1.5 whitespace-nowrap text-left text-[11px] tabular-nums text-white/60"
+                  class="mt-1 whitespace-nowrap text-left text-[11px] tabular-nums text-white/60 sm:mt-1.5"
                 >
                   0:00 / 0:00
                 </div>
@@ -312,8 +326,20 @@ const first = tracks[0];
       </div>
     </main>
 
+    <!-- Per-tenant data for the (shared, static) client bundle -->
+    <script type="application/json" id="tenant-data" set:html={JSON.stringify({ tracks })} />
+
     <script>
-      import tracks from "../tracks.json";
+      interface Track {
+        youtubeId: string;
+        title: string;
+        artist: string;
+        album: string;
+        cover: string | null;
+      }
+      const tracks: Track[] = JSON.parse(
+        document.getElementById("tenant-data")!.textContent!,
+      ).tracks;
 
       // ---------- Clock (blinking colon), in the visitor's own timezone ----------
       const clockEl = document.getElementById("clock")!;
@@ -334,15 +360,16 @@ const first = tracks[0];
       renderClock();
       setInterval(renderClock, 1000);
 
-      // ---------- YouTube player engine (mirrors the original) ----------
-      const START_AT = 5; // the original skips the first video's first 5 seconds
+      // ---------- YouTube player engine ----------
+      const START_AT = 5; // skip the first video's first 5 seconds
       let index = Math.floor(Math.random() * tracks.length);
       let shuffle = false;
-      let player: YT.Player | null = null;
+      let player: any = null;
       let playing = false;
 
       const disc = document.getElementById("disc")!;
       const cover = document.getElementById("cover") as HTMLImageElement;
+      const coverFallback = document.getElementById("cover-fallback")!;
       const titleEl = document.getElementById("track-title")!;
       const artistEl = document.getElementById("track-artist")!;
       const playBtn = document.getElementById("play-btn") as HTMLButtonElement;
@@ -353,13 +380,14 @@ const first = tracks[0];
       const seekKnob = document.getElementById("seek-knob")!;
       const timeEl = document.getElementById("time")!;
 
-      function loadYouTubeApi(): Promise<typeof YT> {
-        if (window.YT?.Player) return Promise.resolve(window.YT);
+      function loadYouTubeApi(): Promise<any> {
+        const w = window as any;
+        if (w.YT?.Player) return Promise.resolve(w.YT);
         return new Promise((resolve) => {
-          const prev = window.onYouTubeIframeAPIReady;
-          window.onYouTubeIframeAPIReady = () => {
+          const prev = w.onYouTubeIframeAPIReady;
+          w.onYouTubeIframeAPIReady = () => {
             prev?.();
-            resolve(window.YT);
+            resolve(w.YT);
           };
           const s = document.createElement("script");
           s.src = "https://www.youtube.com/iframe_api";
@@ -376,7 +404,6 @@ const first = tracks[0];
         playBtn.setAttribute("aria-pressed", String(next));
       }
 
-      const coverFallback = document.getElementById("cover-fallback")!;
       function showTrack(i: number) {
         const t = tracks[i];
         titleEl.textContent = t.title;
@@ -388,8 +415,6 @@ const first = tracks[0];
           coverFallback.classList.add("hidden");
           coverFallback.classList.remove("grid");
         } else {
-          // No artwork in the catalog: a quiet music-note tile instead of a
-          // broken image on the record.
           cover.removeAttribute("src");
           cover.alt = "";
           cover.classList.add("hidden");
@@ -404,11 +429,6 @@ const first = tracks[0];
         player?.loadVideoById(tracks[index].youtubeId);
       }
 
-      /**
-       * The step target: sequential neighbor normally, a random other track
-       * when shuffle is on. Auto-advance at the end of a video uses the same
-       * rule, so shuffle governs the whole listening order.
-       */
       function stepIndex(delta: number): number {
         if (shuffle && tracks.length > 1) {
           let r = index;
@@ -445,8 +465,8 @@ const first = tracks[0];
             onReady: () => {
               playBtn.disabled = false;
             },
-            onStateChange: (e) => {
-              const S = window.YT.PlayerState;
+            onStateChange: (e: any) => {
+              const S = (window as any).YT.PlayerState;
               if (e.data === S.PLAYING) setPlaying(true);
               else if (e.data === S.PAUSED) setPlaying(false);
               else if (e.data === S.ENDED) goTo(stepIndex(1));
@@ -465,12 +485,11 @@ const first = tracks[0];
       // ---------- Keyboard shortcuts ----------
       // Space = play/pause, S = shuffle, ← previous, → next.
       document.addEventListener("keydown", (e) => {
-        // Never hijack typing or modified shortcuts (browser bindings).
         const t = e.target as HTMLElement | null;
         if (e.metaKey || e.ctrlKey || e.altKey) return;
         if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
         if (e.key === " ") {
-          e.preventDefault(); // Space would otherwise scroll the page
+          e.preventDefault();
           if (playing) player?.pauseVideo();
           else player?.playVideo();
         } else if (e.key === "s" || e.key === "S") {
@@ -493,7 +512,7 @@ const first = tracks[0];
         if (duration) player.seekTo(duration * fraction, true);
       });
 
-      // Progress poll, 400 ms like the original
+      // Progress poll, 400 ms
       function fmtTime(s: number) {
         if (!Number.isFinite(s) || s < 0) s = 0;
         return `${Math.floor(s / 60)}:${Math.floor(s % 60)

@@ -1,0 +1,20 @@
+{
+  "9xm": {
+    "title": "9XM Mornings",
+    "description": "9XM Mornings — the Bollywood hits that played on TV while you got ready for school.",
+    "line1": "9XM",
+    "line2": "की सुबह",
+    "tileColor": "#904818",
+    "youtubeLink": "https://music.youtube.com/playlist?list=PLDqMOi757wQ8",
+    "spotifyLink": "https://open.spotify.com/playlist/6ZGYryK4xfQTQIU2CRUEOU"
+  },
+  "paris": {
+    "title": "Paris Nights",
+    "description": "Paris Nights — a dummy tenant proving every subdomain paints its own picture.",
+    "line1": "Paris",
+    "line2": "Nights",
+    "tileColor": "#1d2f4e",
+    "youtubeLink": "https://music.youtube.com/playlist?list=PLDqMOi757wQ8",
+    "spotifyLink": "https://open.spotify.com/playlist/6ZGYryK4xfQTQIU2CRUEOU"
+  }
+}

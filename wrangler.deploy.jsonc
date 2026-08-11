@@ -1,0 +1,19 @@
+{
+  // Deploy config for Cloudflare Workers Builds. Deliberately NOT named
+  // wrangler.jsonc: the Astro Cloudflare adapter's vite plugin auto-discovers
+  // that name at build time and validates `main` before the build has created
+  // it. Wrangler itself is pointed here explicitly by the dashboard deploy
+  // command:  npx wrangler deploy --config wrangler.deploy.jsonc
+  "name": "playlists",
+  "compatibility_date": "2026-04-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "dist/server/entry.mjs",
+  // Upload the server build as-is (it is already split into modules).
+  "no_bundle": true,
+  "rules": [{ "type": "ESModule", "globs": ["**/*.js", "**/*.mjs"] }],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "dist/client"
+  },
+  "observability": { "enabled": true }
+}
