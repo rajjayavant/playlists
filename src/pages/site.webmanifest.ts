@@ -7,8 +7,6 @@ import { resolveTenant, tenantAssets } from "../tenant";
  */
 export const GET: APIRoute = ({ request }) => {
   const tenant = resolveTenant(request.headers.get("host"));
-  if (!tenant) return new Response("Not found", { status: 404 });
-
   const assets = tenantAssets(tenant.key);
   return new Response(
     JSON.stringify({

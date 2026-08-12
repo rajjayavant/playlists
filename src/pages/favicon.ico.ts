@@ -7,7 +7,6 @@ import { resolveTenant, tenantAssets } from "../tenant";
  */
 export const GET: APIRoute = ({ request }) => {
   const tenant = resolveTenant(request.headers.get("host"));
-  if (!tenant) return new Response("Not found", { status: 404 });
   return Response.redirect(
     new URL(`${tenantAssets(tenant.key)}/favicon.ico`, request.url),
     302,

@@ -1,20 +1,19 @@
 ---
 import "../styles/global.css";
 import { resolveTenant, tenantAssets } from "../tenant";
-import tracks9xm from "../tracks/9xm.json";
-import tracksParis from "../tracks/paris.json";
-
-const CATALOGS: Record<string, typeof tracks9xm> = {
-  "9xm": tracks9xm,
-  paris: tracksParis,
-};
+import { tracksFor } from "../catalog";
 
 const tenant = resolveTenant(Astro.request.headers.get("host"));
-if (!tenant) {
-  return new Response("Not found", { status: 404 });
+const tracks = tracksFor(tenant.key);
+if (tracks.length === 0) {
+  // A fresh fork before its first catalog exists — say what's missing
+  // instead of crashing on tracks[0] below.
+  return new Response(
+    `Tenant "${tenant.key}" has no track catalog.\n` +
+      `Generate one with:  npm run tracks ${tenant.key} "<youtube-playlist-url>"\n`,
+    { status: 500, headers: { "Content-Type": "text/plain; charset=utf-8" } },
+  );
 }
-
-const tracks = CATALOGS[tenant.key] ?? tracks9xm;
 const first = tracks[0];
 const assets = tenantAssets(tenant.key);
 
