@@ -11,11 +11,11 @@
   },
   "paris": {
     "title": "Paris Nights",
-    "description": "Paris Nights — a dummy tenant proving every subdomain paints its own picture.",
+    "description": "Paris Nights — moonlit cobblestones and the songs of a Paris evening.",
     "line1": "Paris",
     "line2": "Nights",
     "tileColor": "#1d2f4e",
-    "youtubeLink": "https://music.youtube.com/playlist?list=PLDqMOi757wQ8",
-    "spotifyLink": "https://open.spotify.com/playlist/6ZGYryK4xfQTQIU2CRUEOU"
+    "youtubeLink": "https://music.youtube.com/playlist?list=PLDAy667qhCFo",
+    "spotifyLink": "https://open.spotify.com/playlist/6MrxyQ1txs8OaeOKS4yH3n"
   }
 }
