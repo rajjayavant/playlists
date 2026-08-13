@@ -17,5 +17,14 @@
     "tileColor": "#1d2f4e",
     "youtubeLink": "https://music.youtube.com/playlist?list=PLDAy667qhCFo",
     "spotifyLink": "https://open.spotify.com/playlist/6MrxyQ1txs8OaeOKS4yH3n"
+  },
+  "white-girl": {
+    "title": "White Girl Music",
+    "description": "White Girl Music — the pool-party pop that soundtracked every good summer.",
+    "line1": "White Girl",
+    "line2": "Music",
+    "tileColor": "#19668a",
+    "youtubeLink": "https://music.youtube.com/playlist?list=PLElf6K5BRCXI",
+    "spotifyLink": "https://open.spotify.com/playlist/7tYS16mZ0vdjsEX9Bcfojb"
   }
 }
